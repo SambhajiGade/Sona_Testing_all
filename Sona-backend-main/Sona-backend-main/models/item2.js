@@ -3,12 +3,12 @@ var Schema = mongoose.Schema;
 
 var itemSchema2 = new Schema(
     {
-      files: {
-        type: Array,
+      avatar: {
+        type: String,
       },
      
     },
-    { collection: "users" }
+    { collection: "SamG" }
   );
 
   module.exports = mongoose.model("Item2", itemSchema2);

@@ -13,16 +13,16 @@ var app = express();
 
 // const upload = multer({ storage:multer.diskStorage({
 //   destination:function(req,file,cb){
-//     cb(null,"../uploads/")
+//     cb(null,"uploads")
 //   },
 //   filename:function(req,file,cb){
 //     cb(null,file.fieldname)
 //   }
-// }) }).single("avatar")
+// }) }).single("file")
 
 
 
-// app.post('/profile1', upload, (req, res)=> {
+// app.post('/profile', upload, (req, res)=> {
 
 //   res.send("file uploaded")
 //   console.log("file uploaded...")
@@ -32,6 +32,7 @@ var app = express();
 //   // console.log(next)
 //   // req.body will hold the text fields, if there were any
 // })
+
 
 
 app.use(cors())

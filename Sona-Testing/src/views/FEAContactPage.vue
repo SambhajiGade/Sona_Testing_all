@@ -1297,11 +1297,12 @@ export default {
   let imgfile = event.target.files[0];
  
   const formData = new FormData();
-  formData.append("files",imgfile);
+  formData.append("avatar",imgfile);
 
   
-   
-axios.post("http://localhost:8083/api/items2",formData).then((res)=>{
+   let avatar = formData;
+   console.log("avatar : ",avatar)
+axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
     console.log("result : ",res);
   }).catch((err)=>{
     console.log("file error : ",err)
