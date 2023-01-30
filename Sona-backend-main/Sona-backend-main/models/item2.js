@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var itemSchema1 = new Schema(
+var itemSchema2 = new Schema(
     {
       files: {
         type: Array,
@@ -11,4 +11,4 @@ var itemSchema1 = new Schema(
     { collection: "users" }
   );
 
-  module.exports = mongoose.model("profile1", itemSchema1);
+  module.exports = mongoose.model("Item2", itemSchema2);

@@ -17,8 +17,8 @@
 let express = require('express'),
   multer = require('multer'),
   mongoose = require('mongoose'),
-  router = express.Router();
-const DIR = './uploads/';
+  ItemRouter2 = express.Router();
+const DIR = '../models/uploads/';
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, DIR);
@@ -31,23 +31,23 @@ const storage = multer.diskStorage({
 });
 var upload = multer({
   storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-      cb(null, true);
-    } else {
-      cb(null, false);
-      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-    }
-  }
+  // fileFilter: (req, file, cb) => {
+  //   if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+  //     cb(null, true);
+  //   } else {
+  //     cb(null, false);
+  //     return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+  //   }
+  // }
 });
 // User model
-let User = require('../models/profile1');
-router.post('/file-upload', upload.array('files', 10), (req, res, next) => {
+let User = require('../models/item2');
+ItemRouter2.route('/items2').post(upload.array('files', 10), (req, res, next) => {
   const reqFiles = []
-  const url = req.protocol + '://' + req.get('host')
-  for (var i = 0; i < req.files.length; i++) {
-    reqFiles.push(url + '/uploads/' + req.files[i].filename)
-  }
+  // const url = req.protocol + '://' + req.get('host')
+  // for (var i = 0; i < req.files.length; i++) {
+  //   reqFiles.push(url + "../models/uploads/" + req.files[i].filename)
+  // }
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     files: reqFiles
@@ -68,7 +68,7 @@ router.post('/file-upload', upload.array('files', 10), (req, res, next) => {
       });
   })
 })
-router.get("/", (req, res, next) => {
+ItemRouter2.route('/items2').get( (req, res, next) => {
   User.find().then(data => {
     res.status(200).json({
       message: "Data fetched!",
@@ -76,4 +76,4 @@ router.get("/", (req, res, next) => {
     });
   });
 });
-module.exports = router;
+module.exports = ItemRouter2;

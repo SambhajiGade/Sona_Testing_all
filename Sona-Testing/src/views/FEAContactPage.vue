@@ -1292,7 +1292,7 @@ export default {
   methods: {
 
 
-async filesave(event){
+ filesave(event){
 
   let imgfile = event.target.files[0];
  
@@ -1301,7 +1301,7 @@ async filesave(event){
 
   
    
-   await axios.post("http://localhost:8083/api/profile1",formData).then((res)=>{
+axios.post("http://localhost:8083/api/items2",formData).then((res)=>{
     console.log("result : ",res);
   }).catch((err)=>{
     console.log("file error : ",err)
