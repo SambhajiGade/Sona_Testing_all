@@ -10,7 +10,7 @@ var itemSchema1 = new Schema(
     Project: {
         type: mongoose.Schema.Types.Mixed,
       },
-      model: {
+      Model: {
         type: mongoose.Schema.Types.Mixed,
       },
       Design: {

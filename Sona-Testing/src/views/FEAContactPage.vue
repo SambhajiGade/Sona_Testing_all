@@ -206,7 +206,7 @@
                             ref="gearF2"
                             @change="filechange2"
                           />
-                          <input
+                          <!-- <input
                             hidden="true"
                             type="file"
                             ref="gearP1"
@@ -217,7 +217,7 @@
                             type="file"
                             ref="gearP2"
                             @change="filechange4"
-                          />
+                          /> -->
                         </v-row>
 
                         <v-row align="center" justify="center">
@@ -238,7 +238,7 @@
                           </v-col>
                         </v-row>
 
-                        <v-row align="center" justify="center">
+                        <!-- <v-row align="center" justify="center">
                           <v-col cols="6">
                             <v-btn @click="gp1()">Gear Physical1</v-btn>
                           </v-col>
@@ -254,7 +254,7 @@
                           <v-col cols="6" align="left" justify="left">
                             <p class="mb-0">{{ postdata.namegp2 }}</p>
                           </v-col>
-                        </v-row>
+                        </v-row> -->
                       </div>
                     </div>
                   </v-col>
@@ -286,7 +286,7 @@
                             ref="pinionF2"
                             @change="filechange6"
                           />
-                          <input
+                          <!-- <input
                             hidden="true"
                             type="file"
                             ref="pinionP1"
@@ -297,7 +297,7 @@
                             type="file"
                             ref="pinionP2"
                             @change="filechange8"
-                          />
+                          /> -->
                         </v-row>
 
                         <v-row align="center" justify="center">
@@ -318,7 +318,7 @@
                           </v-col>
                         </v-row>
 
-                        <v-row align="center" justify="center">
+                        <!-- <v-row align="center" justify="center">
                           <v-col cols="6">
                             <v-btn @click="pp1()">Pinion Physical1</v-btn>
                           </v-col>
@@ -334,7 +334,7 @@
                           <v-col cols="6" align="left" justify="left">
                             <p class="mb-0">{{ postdata.namepp2 }}</p>
                           </v-col>
-                        </v-row>
+                        </v-row> -->
                       </div>
                     </div>
                   </v-col>
@@ -361,12 +361,11 @@
       </v-dialog>
     </div>
 
-<div>
-  <form>
-  <input type="file" @change="filesave" />
-</form>
-
-</div>
+    <!-- <div>
+      <form>
+        <input type="file" @change="filesave" />
+      </form>
+    </div> -->
 
     <div class="mt-10 ml-8">
       <table cellspacing="0" border="0">
@@ -957,7 +956,6 @@
             bgcolor="#BFBFBF"
           >
             <b><font face="Century Gothic" color="#000000">Pinion</font></b>
-           
           </td>
           <td
             style="
@@ -974,7 +972,6 @@
               ><font face="Century Gothic" color="#000000"><br /></font
             ></b>
             <img src="../assets/img/p1.jpg" width="100" height="100" />
-           
           </td>
           <td
             style="
@@ -1125,54 +1122,22 @@
         <tr></tr>
         <tr></tr>
       </table>
-    </div> 
+    </div>
   </v-app>
 </template>
 
-<!-- <style type="text/css">
-body,
-div,
-table,
-thead,
-tbody,
-tfoot,
-tr,
-th,
-td,
-p {
-  font-family: "Calibri";
-  font-size: x-small;
-}
-a.comment-indicator:hover + comment {
-  background: #ffd;
-  position: absolute;
-  display: block;
-  border: 1px solid black;
-  padding: 0.5em;
-}
-a.comment-indicator {
-  background: red;
-  display: inline-block;
-  border: 1px solid black;
-  width: 0.5em;
-  height: 0.5em;
-}
-comment {
-  display: none;
-}
-</style> -->
 
 <script>
 import axios from "axios";
 
 import * as firebase from "firebase/app";
 
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+// import {
+//   getStorage,
+//   ref,
+//   uploadBytesResumable,
+//   getDownloadURL,
+// } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsAdm3QQTHlmwMihKSaXcEjcx-cwOeX8c",
@@ -1211,6 +1176,8 @@ export default {
 
       SAM: [],
 
+      SData: null,
+
       selectedfile: null,
 
       Sgf1: false,
@@ -1241,21 +1208,21 @@ export default {
 
         GF1: "",
         GF2: "",
-        GP1: "",
-        GP2: "",
+        // GP1: "",
+        // GP2: "",
         PF1: "",
         PF2: "",
-        PP1: "",
-        PP2: "",
+        // PP1: "",
+        // PP2: "",
         namegf1: "no file selected",
         namegf2: "no file selected",
-        namegp1: "no file selected",
-        namegp2: "no file selected",
+        // namegp1: "no file selected",
+        // namegp2: "no file selected",
 
         namepf1: "no file selected",
         namepf2: "no file selected",
-        namepp1: "no file selected",
-        namepp2: "no file selected",
+        // namepp1: "no file selected",
+        // namepp2: "no file selected",
       },
 
       editdata: {
@@ -1266,23 +1233,32 @@ export default {
         NominalTorque: "",
         JJ01: "",
 
-        GF1: "",
-        GF2: "",
-        GP1: "",
-        GP2: "",
-        PF1: "",
-        PF2: "",
-        PP1: "",
-        PP2: "",
+        SGF1: null,
+        SGF2: null,
+        // SGP1: null,
+        // SGP2: null,
+        SPF1: null,
+        SPF2: null,
+        // SPP1: null,
+        // SPP2: null,
+
+        // GF1: "",
+        // GF2: "",
+        // GP1: "",
+        // GP2: "",
+        // PF1: "",
+        // PF2: "",
+        // PP1: "",
+        // PP2: "",
         namegf1: "no file selected",
         namegf2: "no file selected",
-        namegp1: "no file selected",
-        namegp2: "no file selected",
+        // namegp1: "no file selected",
+        // namegp2: "no file selected",
 
         namepf1: "no file selected",
         namepf2: "no file selected",
-        namepp1: "no file selected",
-        namepp2: "no file selected",
+        // namepp1: "no file selected",
+        // namepp2: "no file selected",
       },
     };
   },
@@ -1290,27 +1266,33 @@ export default {
   mounted() {},
   created() {},
   methods: {
+    filesave(event) {
+      let imgfile = event.target.files[0];
 
+      const formData = new FormData();
+      formData.append("files", imgfile);
+      // formData.append('name',sam)
+//       let sam={
+//   name1:"Sambhaji"
+// }
+formData.append('s',"sam")
 
- filesave(event){
-
-  let imgfile = event.target.files[0];
- 
-  const formData = new FormData();
-  formData.append("avatar",imgfile);
-
-  
-   let avatar = formData;
-   console.log("avatar : ",avatar)
-axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
-    console.log("result : ",res);
-  }).catch((err)=>{
-    console.log("file error : ",err)
-  })
-
-  
-
-},
+      let avatar = formData;
+      console.log("formdata : ", avatar);
+      console.log("avatar : ", avatar);
+      axios
+        .post("http://localhost:8083/api/items2", avatar, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log("result : ", res);
+        })
+        .catch((err) => {
+          console.log("file error : ", err);
+        });
+    },
 
     Project1selected() {
       this.projectclick = true;
@@ -1330,7 +1312,6 @@ axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
     },
 
     AppSelect() {},
-
 
     selectpost(sp) {
       console.log("selected post : ", sp);
@@ -1355,14 +1336,32 @@ axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
       //   this.selectedStep = sp;
     },
 
-  
-
     async save() {
       this.dialog = false;
 
+      const formData = new FormData();
+      formData.append('files',this.postdata.GF1)
+      formData.append('files',this.postdata.GF2)
+      formData.append('files',this.postdata.PF1)
+      formData.append('files',this.postdata.PF2)
+
+      formData.append('Project1',this.postdata.Project1)
+      formData.append('Project',this.postdata.Project)
+      formData.append('Model',this.postdata.Model)
+      formData.append('Design',this.postdata.Design)
+      formData.append('NominalTorque',this.postdata.NominalTorque)
+      formData.append('JJ01',this.postdata.JJ01)
+     
+
+      // this.SData.append("postdata : ",this.postdata)
+      // let Postdata = this.Postdata
       await axios
         // .post("http://localhost:8083/api/items", this.postdata)
-        .post("http://localhost:8083/api/items1", this.postdata)
+        .post("http://localhost:8083/api/items2", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((result1) => {
           console.log("Result : ", result1);
           // this.pcddata();
@@ -1423,7 +1422,6 @@ axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
         });
     },
 
-
     Selecteditm1() {
       this.path2 = this.path2 + this.DTFilterValue;
       this.checkpointer1 = true;
@@ -1441,166 +1439,182 @@ axios.post("http://localhost:8083/api/items2",avatar,{}).then((res)=>{
       this.$refs.gearF1.click();
     },
     filechange1(event) {
-      console.log("file1 : ", event.target.files[0].name);
-      this.postdata.namegf1 =event.target.files[0].name;
-      this.postdata.GearF1 = "S"+Date.now()+event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
+     
+      this.postdata.namegf1 = event.target.files[0].name;
+      this.postdata.GearF1 = "S" + Date.now() + event.target.files[0].name;
+
+    
+      
+      // event.target.files[0].name = "S" + Date.now() + this.postdata.namegf1;
+      // this.selectedfile = event.target.files[0];
+
+      this.postdata.GF1 = event.target.files[0];
+
+      this.postdata.GF1.name="S" + Date.now() + event.target.files[0].name;
+      console.log("img : ",this.postdata.GF1)
+      // const formData = new FormData();
+      // formData.append("files", imgfile);
+
+      // this.postdata.SGF1 = formData;
+
+      // this.SData=formData;
+
       this.Sgf1 = true;
 
-      this.geturl("gf1");
+      // this.geturl("gf1");
     },
     gf2() {
       this.$refs.gearF2.click();
     },
     filechange2(event) {
-      console.log("file2 : ", event.target.files[0].name);
+      
       this.postdata.namegf2 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
+      this.postdata.GF2 = event.target.files[0];
       this.Sgf2 = true;
-      this.geturl("gf2");
+      // this.geturl("gf2");
     },
-    gp1() {
-      this.$refs.gearP1.click();
-    },
-    filechange3(event) {
-      console.log("file3 : ", event.target.files[0].name);
-      this.postdata.namegp1 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
-      this.Sgp1 = true;
-      this.geturl("gp1");
-    },
-    gp2() {
-      this.$refs.gearP2.click();
-    },
-    filechange4(event) {
-      console.log("file4 : ", event.target.files[0].name);
-      this.postdata.namegp2 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
-      this.Spf2 = true;
-      this.geturl("gp2");
-    },
+    // gp1() {
+    //   this.$refs.gearP1.click();
+    // },
+    // filechange3(event) {
+    //   console.log("file3 : ", event.target.files[0].name);
+    //   this.postdata.namegp1 = event.target.files[0].name;
+    //   this.selectedfile = event.target.files[0];
+    //   this.Sgp1 = true;
+    //   this.geturl("gp1");
+    // },
+    // gp2() {
+    //   this.$refs.gearP2.click();
+    // },
+    // filechange4(event) {
+    //   console.log("file4 : ", event.target.files[0].name);
+    //   this.postdata.namegp2 = event.target.files[0].name;
+    //   this.selectedfile = event.target.files[0];
+    //   this.Spf2 = true;
+    //   this.geturl("gp2");
+    // },
 
     pf1() {
       this.$refs.pinionF1.click();
     },
     filechange5(event) {
-      console.log("file5 : ", event.target.files[0].name);
+      
       this.postdata.namepf1 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
+      this.postdata.PF1 = event.target.files[0];
       this.Spf1 = true;
-      this.geturl("pf1");
+      // this.geturl("pf1");
     },
     pf2() {
       this.$refs.pinionF2.click();
     },
     filechange6(event) {
-      console.log("file6 : ", event.target.files[0].name);
+      
       this.postdata.namepf2 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
+      this.postdata.PF2 = event.target.files[0];
       this.Spf2 = true;
-      this.geturl("pf2");
+      // this.geturl("pf2");
     },
-    pp1() {
-      this.$refs.pinionP1.click();
-    },
-    filechange7(event) {
-      console.log("file7 : ", event.target.files[0].name);
-      this.postdata.namepp1 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
-      this.Spp1 = true;
-      this.geturl("pp1");
-    },
-    pp2() {
-      this.$refs.pinionP2.click();
-    },
-    filechange8(event) {
-      console.log("file8 : ", event.target.files[0].name);
-      this.postdata.namepp2 = event.target.files[0].name;
-      this.selectedfile = event.target.files[0];
-      this.Spp2 = true;
-      this.geturl("pp2");
-    },
+    // pp1() {
+    //   this.$refs.pinionP1.click();
+    // },
+    // filechange7(event) {
+    //   console.log("file7 : ", event.target.files[0].name);
+    //   this.postdata.namepp1 = event.target.files[0].name;
+    //   this.selectedfile = event.target.files[0];
+    //   this.Spp1 = true;
+    //   this.geturl("pp1");
+    // },
+    // pp2() {
+    //   this.$refs.pinionP2.click();
+    // },
+    // filechange8(event) {
+    //   console.log("file8 : ", event.target.files[0].name);
+    //   this.postdata.namepp2 = event.target.files[0].name;
+    //   this.selectedfile = event.target.files[0];
+    //   this.Spp2 = true;
+    //   this.geturl("pp2");
+    // },
 
-    geturl(option) {
-      const storage = getStorage();
+    geturl() {
+      // const storage = getStorage();
 
-      const metadata = {
-        contentType: "image/jpeg",
-      };
+      // const metadata = {
+      //   contentType: "image/jpeg",
+      // };
 
-      // Create a reference to 'mountains.jpg'
-      const mountainsRef = ref(storage, "data/" + this.selectedfile.name);
+      // // Create a reference to 'mountains.jpg'
+      // const mountainsRef = ref(storage, "data/" + this.selectedfile.name);
 
-      const Task = uploadBytesResumable(
-        mountainsRef,
-        this.selectedfile,
-        metadata
-      );
+      // const Task = uploadBytesResumable(
+      //   mountainsRef,
+      //   this.selectedfile,
+      //   metadata
+      // );
 
-      Task.on(
-        "state_changed",
-        (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
+      // Task.on(
+      //   "state_changed",
+      //   (snapshot) => {
+      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      //     const progress =
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //     console.log("Upload is " + progress + "% done");
+      //     switch (snapshot.state) {
+      //       case "paused":
+      //         console.log("Upload is paused");
+      //         break;
+      //       case "running":
+      //         console.log("Upload is running");
+      //         break;
+      //     }
+      //   },
+      //   (error) => {
+      //     // A full list of error codes is available at
+      //     // https://firebase.google.com/docs/storage/web/handle-errors
+      //     switch (error.code) {
+      //       case "storage/unauthorized":
+      //         // User doesn't have permission to access the object
+      //         break;
+      //       case "storage/canceled":
+      //         // User canceled the upload
+      //         break;
 
-            // ...
+      //       // ...
 
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(Task.snapshot.ref).then((downloadURL) => {
-            console.log("option : ", option);
+      //       case "storage/unknown":
+      //         // Unknown error occurred, inspect error.serverResponse
+      //         break;
+      //     }
+      //   },
+      //   () => {
+      //     // Upload completed successfully, now we can get the download URL
+      //     getDownloadURL(Task.snapshot.ref).then((downloadURL) => {
+      //       console.log("option : ", option);
 
-            if (option == "gf1") {
-              this.postdata.GF1 = downloadURL;
-            } else if (option == "gf2") {
-              this.postdata.GF2 = downloadURL;
-            } else if (option == "gp1") {
-              this.postdata.GP1 = downloadURL;
-            } else if (option == "gp2") {
-              this.postdata.GP2 = downloadURL;
-            } else if (option == "pf1") {
-              this.postdata.PF1 = downloadURL;
-            } else if (option == "pf2") {
-              this.postdata.PF2 = downloadURL;
-            } else if (option == "pp1") {
-              this.postdata.PP1 = downloadURL;
-            } else if (option == "pp2") {
-              this.postdata.PP2 = downloadURL;
-            } else {
-              console.log("else block");
-            }
+      //       if (option == "gf1") {
+      //         this.postdata.GF1 = downloadURL;
+      //       } else if (option == "gf2") {
+      //         this.postdata.GF2 = downloadURL;
+      //       } else if (option == "gp1") {
+      //         this.postdata.GP1 = downloadURL;
+      //       } else if (option == "gp2") {
+      //         this.postdata.GP2 = downloadURL;
+      //       } else if (option == "pf1") {
+      //         this.postdata.PF1 = downloadURL;
+      //       } else if (option == "pf2") {
+      //         this.postdata.PF2 = downloadURL;
+      //       } else if (option == "pp1") {
+      //         this.postdata.PP1 = downloadURL;
+      //       } else if (option == "pp2") {
+      //         this.postdata.PP2 = downloadURL;
+      //       } else {
+      //         console.log("else block");
+      //       }
 
-            this.samurl = downloadURL;
-            console.log("File available at : ", downloadURL);
-          });
-        }
-      );
+      //       this.samurl = downloadURL;
+      //       console.log("File available at : ", downloadURL);
+      //     });
+      //   }
+      // );
     },
   },
 };

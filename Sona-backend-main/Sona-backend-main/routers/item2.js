@@ -39,20 +39,45 @@ var upload = multer({
     limits:{
         fileSize: 1024 * 1024 *2
     }
-}).single('avatar')
+});
 
 
 itemRouter2
   .route("/items2")
-  .post(upload,function (request, response) {
-    console.log("POST /items2 ");
+  .post(upload.array('files',10),function (request, response) {
+    console.log("POST /items2 ",request);
 
     var item2 = new Item2({
 
-      avatar:request.file.originalname,
+      Project1:request.body.Project1,
+      Project:request.body.Project,
+      Model:request.body.Model,
+      Design:request.body.Design,
+      NominalTorque:request.body.NominalTorque,
+      JJ01:request.body.JJ01,
+      // file1:request.file[0].path,
+      // file2:request.file[1].path,
+      // file3:request.file[2].path,
+      // file4:request.file[3].path,
     }
-      
+ 
     );
+
+// console.log("file 1 : ",request.files)
+
+    if(request.files[0]){
+      item2.file1=request.files[0].path
+    }
+    if(request.files[1]){
+      item2.file2=request.files[1].path
+    }
+    if(request.files[2]){
+      item2.file3=request.files[2].path
+    }
+    if(request.files[3]){
+      item2.file4=request.files[3].path
+    }
+
 
     item2.save().then((result)=>{
       console.log("result : ",result)
