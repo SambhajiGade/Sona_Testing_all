@@ -37,6 +37,41 @@
               >HOME</v-btn
             >
           </v-row>
+
+          <v-row>
+            <v-col cols="3" class="pa-0">
+              <!-- <v-select
+                :items="SortList"
+                v-model="SortedValue"
+                label="Select Field"
+                class="pt-6 pb-2 ml-3"
+               
+                @change="SortField"
+              ></v-select> -->
+              <v-combobox
+                v-model="SortedValue"
+                :items="SortList"
+                label="Select Fields"
+                class="pt-6 pb-2 ml-3"
+                @change="SortField"
+                multiple
+              ></v-combobox>
+            </v-col>
+            <v-col cols="1">
+              <v-text-field
+                v-model="greater"
+                type="number"
+                label="Greater than"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="1">
+              <v-text-field
+                v-model="less"
+                type="number"
+                label="Less than"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </template>
 
         <v-card>
@@ -945,7 +980,41 @@ export default {
         { text: "JJ01-A1B4", value: "JJ01-A1B4" },
       ],
 
+      SortList: [
+        { text: "Gear MCS", value: "mcs1" },
+        { text: "Pinion MCS", value: "mcs2" },
+        { text: "Gear Tensile Rib", value: "rib1" },
+        { text: "Gear Tensile Root", value: "root1" },
+        { text: "Gear Tensile Web", value: "web1" },
+        { text: "Pinion Compression Rib", value: "rib2" },
+        { text: "Pinion Compression Root", value: "root2" },
+        { text: "Pinion Compression Web", value: "web2" },
+      ],
+
       DTFilterValue: null,
+      SortedValue: [],
+      SortedValue1: [],
+
+      less: "",
+      greater: "",
+
+      SortGmcs1: "",
+      SortGmcs2: "",
+      SortGrib1: "",
+      SortGroot1: "",
+      SortGweb1: "",
+      SortGrib2: "",
+      SortGroot2: "",
+      SortGweb2: "",
+
+      SortLmcs1: "",
+      SortLmcs2: "",
+      SortLrib1: "",
+      SortLroot1: "",
+      SortLweb1: "",
+      SortLrib2: "",
+      SortLroot2: "",
+      SortLweb2: "",
 
       singleSelect1: true,
       selected1: [],
@@ -1058,14 +1127,233 @@ export default {
         },
         { text: "Application", value: "Column3" },
         { text: "Step", value: "Report" },
-        { text: "MCS", value: "Column5" },
-        { text: "Rib (MBS)", value: "Column6" },
-        { text: "Root (MBS)", value: "Column7" },
-        { text: "Web (MBS)", value: "Column8" },
-        { text: "Rib (MBS)", value: "Column9" },
-        { text: "Root (MBS)", value: "Column10" },
-        { text: "Web (MBS)", value: "Column11" },
-        { text: "MCS", value: "Column12" },
+        {
+          text: "MCS",
+          value: "Column5",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "mcs1") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGmcs1 = this.greater;
+              this.SortLmcs1 = this.less;
+              console.log("Gmcs : ",this.SortGmcs1)
+            }
+            if (!this.SortLmcs1 && !this.SortGmcs1) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLmcs1 && !this.SortGmcs1) {
+              let S = value <= parseInt(this.SortLmcs1);
+              return S;
+            } else if (!this.SortLmcs1 && this.SortGmcs1) {
+              let S = value >= parseInt(this.SortGmcs1);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLmcs1) &&
+                value >= parseInt(this.SortGmcs1);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Rib (MBS)",
+          value: "Column6",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "rib1") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGrib1 = this.greater;
+              this.SortLrib1 = this.less;
+              console.log("Grib : ",this.SortGrib1)
+            }
+            if (!this.SortLrib1 && !this.SortGrib1) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLrib1 && !this.SortGrib1) {
+              let S = value <= parseInt(this.SortLrib1);
+              return S;
+            } else if (!this.SortLrib1 && this.SortGrib1) {
+              let S = value >= parseInt(this.SortGrib1);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLrib1) &&
+                value >= parseInt(this.SortGrib1);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Root (MBS)",
+          value: "Column7",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "root1") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGroot1 = this.greater;
+              this.SortLroot1 = this.less;
+              console.log("Groot : ",this.SortGroot1)
+            }
+            if (!this.SortLroot1 && !this.SortGroot1) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLroot1 && !this.SortGroot1) {
+              let S = value <= parseInt(this.SortLroot1);
+              return S;
+            } else if (!this.SortLroot1 && this.SortGroot1) {
+              let S = value >= parseInt(this.SortGroot1);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLroot1) &&
+                value >= parseInt(this.SortGroot1);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Web (MBS)",
+          value: "Column8",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "web1") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGweb1 = this.greater;
+              this.SortLweb1 = this.less;
+            }
+            if (!this.SortLweb1 && !this.SortGweb1) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLweb1 && !this.SortGweb1) {
+              let S = value < parseInt(this.SortLweb1);
+              return S;
+            } else if (!this.SortLweb1 && this.SortGweb1) {
+              let S = value > parseInt(this.SortGweb1);
+              return S;
+            } else {
+              let S =
+                value < parseInt(this.SortLweb1) &&
+                value > parseInt(this.SortGweb1);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Rib (MBS)",
+          value: "Column9",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "rib2") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGrib2 = this.greater;
+              this.SortLrib2 = this.less;
+            }
+            if (!this.SortLrib2 && !this.SortGrib2) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLrib2 && !this.SortGrib2) {
+              let S = value <= parseInt(this.SortLrib2);
+              return S;
+            } else if (!this.SortLrib2 && this.SortGrib2) {
+              let S = value >= parseInt(this.SortGrib2);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLrib2) &&
+                value >= parseInt(this.SortGrib2);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Root (MBS)",
+          value: "Column10",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "root2") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGroot2 = this.greater;
+              this.SortLroot2 = this.less;
+            }
+            if (!this.SortLroot2 && !this.SortGroot2) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLroot2 && !this.SortGroot2) {
+              let S = value <= parseInt(this.SortLroot2);
+              return S;
+            } else if (!this.SortLroot2 && this.SortGroot2) {
+              let S = value >= parseInt(this.SortGroot2);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLroot2) &&
+                value >= parseInt(this.SortGroot2);
+              return S;
+            }
+          },
+        },
+        {
+          text: "Web (MBS)",
+          value: "Column11",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "web2") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGweb2 = this.greater;
+              this.SortLweb2 = this.less;
+            }
+            if (!this.SortLweb2 && !this.SortGweb2) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLweb2 && !this.SortGweb2) {
+              let S = value <= parseInt(this.SortLweb2);
+              return S;
+            } else if (!this.SortLweb2 && this.SortGweb2) {
+              let S = value >= parseInt(this.SortGweb2);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLweb2) &&
+                value >= parseInt(this.SortGweb2);
+              return S;
+            }
+          },
+        },
+        {
+          text: "MCS",
+          value: "Column12",
+          filter: (value) => {
+            var valObj = this.SortedValue.filter(function (elem) {
+              if (elem.value == "mcs2") return elem.value;
+            });
+
+            if (valObj.length) {
+              this.SortGmcs2 = this.greater;
+              this.SortLmcs2 = this.less;
+            }
+            if (!this.SortLmcs2 && !this.SortGmcs2) return true;
+            // if(this.sam) return value > parseInt(this.sam)
+            if (this.SortLmcs2 && !this.SortGmcs2) {
+              let S = value <= parseInt(this.SortLmcs2);
+              return S;
+            } else if (!this.SortLmcs2 && this.SortGmcs2) {
+              let S = value >= parseInt(this.SortGmcs2);
+              return S;
+            } else {
+              let S =
+                value <= parseInt(this.SortLmcs2) &&
+                value >= parseInt(this.SortGmcs2);
+              return S;
+            }
+          },
+        },
         { text: "Rib (MBS)", value: "Column13" },
         { text: "Root (MBS)", value: "Column14" },
         { text: "Web (MBS)", value: "Column15" },
@@ -1081,6 +1369,52 @@ export default {
   },
   created() {},
   methods: {
+    SortField() {
+      this.less = "";
+      this.greater = "";
+
+      // console.log("selected : ", this.SortedValue);
+      // let p=this.SortedValue.find("mcs7")
+      // let val = this.SortedValue;
+
+      // var valObj = this.SortedValue.filter(function(elem){
+      //   console.log("ele : ",elem)
+      //     if(elem.value == "mcs1") return elem.value;
+      // });
+      // console.log("mcs find : ",valObj)
+
+      // console.log("sorted1 : ",this.SortedValue1)
+      // if (this.SortedValue == "mcs1") {
+      //   console.log("mcs1 L : ", this.SortLmcs1);
+
+      this.SortGmcs1 = this.greater;
+      this.SortLmcs1 = this.less;
+      // } else if (this.SortedValue == "rib1") {
+      this.SortGrib1 = this.greater;
+      this.SortLrib1 = this.less;
+      // } else if (this.SortedValue == "root1") {
+      this.SortGroot1 = this.greater;
+      this.SortLroot1 = this.less;
+      // } else if (this.SortedValue == "web1") {
+      this.SortGweb1 = this.greater;
+      this.SortLweb1 = this.less;
+      // } else if (this.SortedValue == "rib2") {
+      this.SortGrib2 = this.greater;
+      this.SortLrib2 = this.less;
+      // } else if (this.SortedValue == "root2") {
+      this.SortGroot2 = this.greater;
+      this.SortLroot2 = this.less;
+      // } else if (this.SortedValue == "web2") {
+      this.SortGweb2 = this.greater;
+      this.SortLweb2 = this.less;
+      // } else if (this.SortedValue == "mcs2") {
+      this.SortGmcs2 = this.greater;
+      this.SortLmcs2 = this.less;
+      // } else {
+      //   console.log("not selected");
+      // }
+    },
+
     Projectselected() {
       // this.projectclick = true;
     },
@@ -1458,6 +1792,8 @@ export default {
     },
 
     Selecteditm1() {
+      console.log("value : ", this.DTFilterValue);
+      this.path2 = "/Dashboard/";
       this.path2 = this.path2 + this.DTFilterValue;
       this.checkpointer1 = true;
       this.disableb = false;
@@ -1637,22 +1973,16 @@ export default {
   },
 };
 
-
-
-
-
 // filter: value => {
 //             if (!this.calories && !this.sam) return true
 //              // if(this.sam) return value > parseInt(this.sam)
 //            if(this.calories && this.sam)
-  
+
 //            {
 //              let S =value < parseInt(this.calories) && value>parseInt(this.sam)
-             
+
 //              return S}
 //           },
-
-
 
 // <div id="app">
 //   <v-app id="inspire">
@@ -1696,8 +2026,6 @@ export default {
 //     </div>
 //   </v-app>
 // </div>
-
-
 
 // new Vue({
 //   el: '#app',
@@ -1807,10 +2135,10 @@ export default {
 //             if (!this.calories && !this.sam) return true
 //              // if(this.sam) return value > parseInt(this.sam)
 //            if(this.calories && this.sam)
-  
+
 //            {
 //              let S =value < parseInt(this.calories) && value>parseInt(this.sam)
-             
+
 //              return S}
 //           },
 //         },
@@ -1830,5 +2158,4 @@ export default {
 //     },
 //   },
 // })
-
 </script>

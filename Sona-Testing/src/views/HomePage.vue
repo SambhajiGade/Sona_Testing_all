@@ -572,6 +572,7 @@ export default {
     },
     selectedItm() {
       console.log("Selected item is in method : ", this.DTFilterValue);
+      this.path2="/Dashboard/"
       this.path2 = this.path2 + this.DTFilterValue;
       this.checkpointer = true;
       this.disableb = false;
