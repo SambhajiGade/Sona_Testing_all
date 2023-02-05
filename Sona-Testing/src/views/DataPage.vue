@@ -39,7 +39,82 @@
           </v-row>
 
           <v-row>
-            <v-col cols="3" class="pa-0">
+            <v-col cols="auto">
+              <p align="center">Gear Pair</p>
+              <div v-for="item in GearPair" :key="item" class="ma-0">
+                <v-checkbox
+                  v-model="SortedGearPair"
+                  :label="item.text"
+                  :value="item.value"
+                  class="ma-0"
+                ></v-checkbox>
+              </div>
+            </v-col>
+
+            <v-col cols="auto">
+              <p align="center">Differential Torque</p>
+
+              <div v-for="item in items1" :key="item" class="ma-0">
+                <v-checkbox
+                  v-model="SortedDT"
+                  :label="item.text"
+                  :value="item.value"
+                  class="ma-0"
+                ></v-checkbox>
+              </div>
+            </v-col>
+
+            <v-col cols="auto">
+              <p align="center">Application</p>
+
+              <div v-for="item in Application" :key="item" class="ma-0">
+                <v-checkbox
+                  v-model="SortedApplication"
+                  :label="item.text"
+                  :value="item.value"
+                  class="ma-0"
+                ></v-checkbox>
+              </div>
+            </v-col>
+
+            <v-col cols="auto">
+              <p align="center">Steps</p>
+
+              <div v-for="item in items" :key="item" class="ma-0">
+                <v-checkbox
+                  v-model="SortedSteps"
+                  :label="item.text"
+                  :value="item.value"
+                  class="ma-0"
+                ></v-checkbox>
+              </div>
+            </v-col>
+
+            <v-col cols="auto">
+              <p align="center">Fields</p>
+
+              <div v-for="item in SortList" :key="item" class="ma-0">
+                <v-checkbox
+                  v-model="SortedValue"
+                  :label="item.text"
+                  :value="item"
+                  class="ma-0"
+                ></v-checkbox>
+              </div>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col
+              cols="1"
+              class="pa-0"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+              align="center"
+            >
               <!-- <v-select
                 :items="SortList"
                 v-model="SortedValue"
@@ -48,14 +123,16 @@
                
                 @change="SortField"
               ></v-select> -->
-              <v-combobox
+              <!-- <v-combobox
                 v-model="SortedValue"
                 :items="SortList"
                 label="Select Fields"
                 class="pt-6 pb-2 ml-3"
                 @change="SortField"
                 multiple
-              ></v-combobox>
+              ></v-combobox> -->
+
+              <span align="center">Between </span>
             </v-col>
             <v-col cols="1">
               <v-text-field
@@ -93,7 +170,7 @@
                 <v-col cols="3">
                   <v-select
                     v-model="postdata.Project"
-                    :items="GearPair"
+                    :items="DTList"
                     label="Select"
                     persistent-hint
                     return-object
@@ -570,7 +647,7 @@
                 <v-col cols="3">
                   <v-select
                     v-model="editdata.Project"
-                    :items="GearPair"
+                    :items="DTList"
                     label="Select"
                     persistent-hint
                     return-object
@@ -904,7 +981,7 @@
       :headers="headers"
       :items="SAM"
       :single-select="singleSelect1"
-      item-key="id"
+      item-key="_id"
       show-select
       class="elevation-1"
       id="ttable1"
@@ -964,14 +1041,30 @@ export default {
   data() {
     return {
       select: { state: "" },
-      items: ["GTPR", "PCD", "PTGR"],
-      items1: [1000, 2000, 3000, 4000, 5000, 6000, 4500, 5500],
+      items: [
+        { text: "GTPR", value: "GTPR" },
+        { text: "PCD", value: "PCD" },
+        { text: "PTGR", value: "PTGR" },
+      ],
+      items1: [
+        { text: "1000", value: 1000 },
+        { text: "2000", value: 2000 },
+        { text: "3000", value: 3000 },
+        { text: "4000", value: 4000 },
+        { text: "5000", value: 5000 },
+        { text: "6000", value: 6000 },
+        { text: "4500", value: 4500 },
+        { text: "5500", value: 5500 },
+      ],
 
-      GearPair: ["JJ01-A1B1", "JJ01-A1B2", "JJ01-A1B3", "JJ01-A1B4"],
+      DTList: ["JJ01-A1B1", "JJ01-A1B2", "JJ01-A1B3", "JJ01-A1B4"],
 
-      Application: ["2Pinion", "4Pinion"],
+      Application: [
+        { text: "2Pinion", value: "2Pinion" },
+        { text: "4Pinion", value: "4Pinion" },
+      ],
 
-      DTList: [
+      GearPair: [
         // { text: "All", value: null },
 
         { text: "JJ01-A1B1", value: "JJ01-A1B1" },
@@ -994,6 +1087,10 @@ export default {
       DTFilterValue: null,
       SortedValue: [],
       SortedValue1: [],
+      SortedGearPair: [],
+      SortedDT: [],
+      SortedApplication: [],
+      SortedSteps: [],
 
       less: "",
       greater: "",
@@ -1118,28 +1215,86 @@ export default {
           align: "left",
           sortable: false,
           value: "Project",
-          filter: this.DTFilter,
+          // filter: this.DTFilter,
+          filter: (value) => {
+            if (!this.SortedGearPair.length) {
+              return true;
+            } else {
+              console.log("I am in else");
+              let val = this.SortedGearPair.includes(value);
+
+              if (val) {
+                return value;
+              }
+            }
+          },
         },
         {
           text: "Diffrential \nTorque",
           value: "JJ01",
           // filter: this.DTFilter,
+          filter: (value) => {
+            if (!this.SortedDT.length) {
+              return true;
+            } else {
+              let val = this.SortedDT.includes(value);
+
+              if (val) {
+                return value;
+              }
+            }
+          },
         },
-        { text: "Application", value: "Column3" },
-        { text: "Step", value: "Report" },
+        {
+          text: "Application",
+          value: "Column3",
+          filter: (value) => {
+            if (!this.SortedApplication.length) {
+              return true;
+            } else {
+              let val = this.SortedApplication.includes(value);
+
+              if (val) {
+                return value;
+              }
+            }
+          },
+        },
+        {
+          text: "Step",
+          value: "Report",
+          filter: (value) => {
+            if (!this.SortedSteps.length) {
+              return true;
+            } else {
+              let val = this.SortedSteps.includes(value);
+
+              if (val) {
+                return value;
+              }
+            }
+          },
+        },
         {
           text: "MCS",
           value: "Column5",
           filter: (value) => {
+            console.log("mcs1 value is :", value);
+            console.log("selected array : ", this.SortedValue);
             var valObj = this.SortedValue.filter(function (elem) {
-              if (elem.value == "mcs1") return elem.value;
+              if (elem.value == "mcs1") {
+                return elem.value;
+              }
             });
 
             if (valObj.length) {
               this.SortGmcs1 = this.greater;
               this.SortLmcs1 = this.less;
-              console.log("Gmcs : ",this.SortGmcs1)
+            } else {
+              this.SortGmcs1 = "";
+              this.SortLmcs1 = "";
             }
+            // console.log("Gmcs : ", this.SortGmcs1);
             if (!this.SortLmcs1 && !this.SortGmcs1) return true;
             // if(this.sam) return value > parseInt(this.sam)
             if (this.SortLmcs1 && !this.SortGmcs1) {
@@ -1160,6 +1315,7 @@ export default {
           text: "Rib (MBS)",
           value: "Column6",
           filter: (value) => {
+            console.log("rib1 value is :", value);
             var valObj = this.SortedValue.filter(function (elem) {
               if (elem.value == "rib1") return elem.value;
             });
@@ -1167,8 +1323,12 @@ export default {
             if (valObj.length) {
               this.SortGrib1 = this.greater;
               this.SortLrib1 = this.less;
-              console.log("Grib : ",this.SortGrib1)
+              console.log("Grib : ", this.SortGrib1);
+            } else {
+              this.SortGrib1 = "";
+              this.SortLrib1 = "";
             }
+            // console.log("Grib : ", this.SortGrib1)
             if (!this.SortLrib1 && !this.SortGrib1) return true;
             // if(this.sam) return value > parseInt(this.sam)
             if (this.SortLrib1 && !this.SortGrib1) {
@@ -1189,6 +1349,7 @@ export default {
           text: "Root (MBS)",
           value: "Column7",
           filter: (value) => {
+            console.log("root1 value is :", value);
             var valObj = this.SortedValue.filter(function (elem) {
               if (elem.value == "root1") return elem.value;
             });
@@ -1196,8 +1357,12 @@ export default {
             if (valObj.length) {
               this.SortGroot1 = this.greater;
               this.SortLroot1 = this.less;
-              console.log("Groot : ",this.SortGroot1)
+              // console.log("Groot : ", this.SortGroot1);
+            } else {
+              this.SortGroot1 = "";
+              this.SortLroot1 = "";
             }
+            // console.log("Groot : ", this.SortGroot1)
             if (!this.SortLroot1 && !this.SortGroot1) return true;
             // if(this.sam) return value > parseInt(this.sam)
             if (this.SortLroot1 && !this.SortGroot1) {
@@ -1225,6 +1390,9 @@ export default {
             if (valObj.length) {
               this.SortGweb1 = this.greater;
               this.SortLweb1 = this.less;
+            } else {
+              this.SortGweb1 = "";
+              this.SortLweb1 = "";
             }
             if (!this.SortLweb1 && !this.SortGweb1) return true;
             // if(this.sam) return value > parseInt(this.sam)
@@ -1253,6 +1421,9 @@ export default {
             if (valObj.length) {
               this.SortGrib2 = this.greater;
               this.SortLrib2 = this.less;
+            } else {
+              this.SortGrib2 = "";
+              this.SortLrib2 = "";
             }
             if (!this.SortLrib2 && !this.SortGrib2) return true;
             // if(this.sam) return value > parseInt(this.sam)
@@ -1281,6 +1452,9 @@ export default {
             if (valObj.length) {
               this.SortGroot2 = this.greater;
               this.SortLroot2 = this.less;
+            } else {
+              this.SortGroot2 = "";
+              this.SortLroot2 = "";
             }
             if (!this.SortLroot2 && !this.SortGroot2) return true;
             // if(this.sam) return value > parseInt(this.sam)
@@ -1309,6 +1483,9 @@ export default {
             if (valObj.length) {
               this.SortGweb2 = this.greater;
               this.SortLweb2 = this.less;
+            } else {
+              this.SortGweb2 = "";
+              this.SortLweb2 = "";
             }
             if (!this.SortLweb2 && !this.SortGweb2) return true;
             // if(this.sam) return value > parseInt(this.sam)
@@ -1337,6 +1514,9 @@ export default {
             if (valObj.length) {
               this.SortGmcs2 = this.greater;
               this.SortLmcs2 = this.less;
+            } else {
+              this.SortGmcs2 = "";
+              this.SortLmcs2 = "";
             }
             if (!this.SortLmcs2 && !this.SortGmcs2) return true;
             // if(this.sam) return value > parseInt(this.sam)
@@ -1370,46 +1550,42 @@ export default {
   created() {},
   methods: {
     SortField() {
-      this.less = "";
-      this.greater = "";
-
+      // this.less = "";
+      // this.greater = "";
       // console.log("selected : ", this.SortedValue);
       // let p=this.SortedValue.find("mcs7")
       // let val = this.SortedValue;
-
       // var valObj = this.SortedValue.filter(function(elem){
       //   console.log("ele : ",elem)
       //     if(elem.value == "mcs1") return elem.value;
       // });
       // console.log("mcs find : ",valObj)
-
       // console.log("sorted1 : ",this.SortedValue1)
       // if (this.SortedValue == "mcs1") {
       //   console.log("mcs1 L : ", this.SortLmcs1);
-
-      this.SortGmcs1 = this.greater;
-      this.SortLmcs1 = this.less;
+      // this.SortGmcs1 = this.greater;
+      // this.SortLmcs1 = this.less;
       // } else if (this.SortedValue == "rib1") {
-      this.SortGrib1 = this.greater;
-      this.SortLrib1 = this.less;
+      // this.SortGrib1 = this.greater;
+      // this.SortLrib1 = this.less;
       // } else if (this.SortedValue == "root1") {
-      this.SortGroot1 = this.greater;
-      this.SortLroot1 = this.less;
+      // this.SortGroot1 = this.greater;
+      // this.SortLroot1 = this.less;
       // } else if (this.SortedValue == "web1") {
-      this.SortGweb1 = this.greater;
-      this.SortLweb1 = this.less;
+      // this.SortGweb1 = this.greater;
+      // this.SortLweb1 = this.less;
       // } else if (this.SortedValue == "rib2") {
-      this.SortGrib2 = this.greater;
-      this.SortLrib2 = this.less;
+      // this.SortGrib2 = this.greater;
+      // this.SortLrib2 = this.less;
       // } else if (this.SortedValue == "root2") {
-      this.SortGroot2 = this.greater;
-      this.SortLroot2 = this.less;
+      // this.SortGroot2 = this.greater;
+      // this.SortLroot2 = this.less;
       // } else if (this.SortedValue == "web2") {
-      this.SortGweb2 = this.greater;
-      this.SortLweb2 = this.less;
+      // this.SortGweb2 = this.greater;
+      // this.SortLweb2 = this.less;
       // } else if (this.SortedValue == "mcs2") {
-      this.SortGmcs2 = this.greater;
-      this.SortLmcs2 = this.less;
+      // this.SortGmcs2 = this.greater;
+      // this.SortLmcs2 = this.less;
       // } else {
       //   console.log("not selected");
       // }
